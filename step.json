@@ -1,0 +1,7 @@
+{
+    "step0": "yarn install",
+    "step1": "npx medusa migrations run",
+    "step2": "npx medusa seed",
+    "step3": "yarn run build:server",
+    "step4": "yarn run start"
+}   

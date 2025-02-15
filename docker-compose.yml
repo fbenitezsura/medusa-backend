@@ -1,0 +1,55 @@
+services:
+  medusa:
+    build: .
+    container_name: medusa
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./data/seed.json:/app/data/seed.json
+    environment:
+      JWT_SECRET: something
+      COOKIE_SECRET: something
+      STORE_CORS: http://localhost:8000
+      DATABASE_TYPE: postgres
+      REDIS_URL: redis://redis:6379
+      DATABASE_URL: postgres://postgres:2805@postgres:5432/postgres
+      STRAPI_USER: medusa@admin.cl
+      STRAPI_PASSWORD: medusa123
+      STRAPI_URL: localhost
+      MEDUSA_ADMIN_ONBOARDING_TYPE: default
+      MEDUSA_FF_PRODUCT_CATEGORIES: "true"
+      MEDUSA_ADMIN_BACKEND_URL: http://localhost:9000
+      BACKEND_URL: http://localhost:9000
+      API_KEY_FLOW_PAYMENT: 375F9C2C-67C3-4D96-A593-8D747062LEBE
+      SECRET_KEY_FLOW_PAYMENT: 1e2c983582a0f7f8ab4bd3abf84d54c33f5df52f
+      FLOW_URL: https://sandbox.flow.cl/api/payment/create
+      ADMIN_CORS: http://localhost:7001
+    depends_on:
+      - postgres
+      - redis
+
+  postgres:
+    image: postgres:13-alpine
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 2805
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+volumes:
+  postgres_data:
+  redis_data:
