@@ -54,6 +54,13 @@ const plugins = [
     }
   },
   {
+    resolve: `./src/services/stripe-payment.service.ts`,
+    options: {
+      // No requiere opciones específicas más allá de las vars de entorno:
+      // STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET (opcional), STRIPE_API_VERSION
+    },
+  },
+  {
     resolve: "@medusajs/admin",
     /** @type {import('@medusajs/admin').PluginOptions} */
     options: {
